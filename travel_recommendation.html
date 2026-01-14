@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>TravelBloom</title>
+
+    <!-- ===== CSS ===== -->
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+        }
+
+        /* Navbar */
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 30px;
+            background-color: rgba(0, 0, 0, 0.8);
+            color: white;
+        }
+
+        .navbar a {
+            color: white;
+            text-decoration: none;
+            margin: 0 10px;
+        }
+
+        .search-box input {
+            padding: 5px;
+        }
+
+        .search-box button {
+            padding: 6px 10px;
+            margin-left: 5px;
+            cursor: pointer;
+        }
+
+        /* Home Section */
+        .home {
+            background-image: url("https://images.unsplash.com/photo-1507525428034-b723cf961d3e");
+            background-size: cover;
+            background-position: center;
+            height: 90vh;
+            color: white;
+            text-align: center;
+            padding-top: 120px;
+        }
+
+        .home h1 {
+            font-size: 48px;
+        }
+
+        .social-icons {
+            margin-top: 20px;
+            font-size: 24px;
+        }
+
+        /* Results */
+        .results {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+            padding: 30px;
+            justify-content: center;
+        }
+
+        .card {
+            width: 250px;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            overflow: hidden;
+        }
+
+        .card img {
+            width: 100%;
+            height: 150px;
+            object-fit: cover;
+        }
+
+        .card h3 {
+            margin: 10px;
+        }
+
+        .card p {
+            margin: 10px;
+            font-size: 14px;
+        }
+
+        /* Sections */
+        .section {
+            padding: 40px;
+        }
+
+        /* Contact Form */
+        .contact-form input,
+        .contact-form textarea {
+            width: 300px;
+            display: block;
+            margin-bottom: 10px;
+            padding: 8px;
+        }
+
+        .contact-form button {
+            padding: 8px 15px;
+        }
+    </style>
+</head>
+
+<body>
+
+<!-- ===== NAVBAR ===== -->
+<div class="navbar">
+    <h2>TravelBloom</h2>
+
+    <div>
+        <a href="#home">Home</a>
+        <a href="#about">About Us</a>
+        <a href="#contact">Contact Us</a>
+    </div>
+
+    <div class="search-box">
+        <input type="text" id="searchInput" placeholder="Search beach, temple, country">
+        <button onclick="searchRecommendations()">Search</button>
+        <button onclick="clearResults()">Reset</button>
+    </div>
+</div>
+
+<!-- ===== HOME ===== -->
+<div id="home" class="home">
+    <h1>Explore the World with TravelBloom</h1>
+    <p>Your trusted travel recommendation platform</p>
+
+    <div class="social-icons">
+        🌍 📸 🐦
+    </div>
+</div>
+
+<!-- ===== RESULTS ===== -->
+<div id="results" class="results"></div>
+
+<!-- ===== ABOUT US ===== -->
+<div id="about" class="section">
+    <h1>About Us</h1>
+    <p>
+        TravelBloom helps travelers discover the most beautiful beaches,
+        historic temples, and amazing countries around the world.
+    </p>
+
+    <h2>Our Team</h2>
+    <ul>
+        <li><strong>Venky Reddy</strong> – Founder & Developer</li>
+        <li><strong>Alex Johnson</strong> – UI Designer</li>
+        <li><strong>Maria Lopez</strong> – Travel Expert</li>
+    </ul>
+</div>
+
+<!-- ===== CONTACT US ===== -->
+<div id="contact" class="section">
+    <h1>Contact Us</h1>
+
+    <form class="contact-form">
+        <input type="text" placeholder="Your Name" required>
+        <input type="email" placeholder="Your Email" required>
+        <textarea placeholder="Your Message"></textarea>
+        <button type="submit">Submit</button>
+    </form>
+</div>
+
+<!-- ===== JAVASCRIPT ===== -->
+<script>
+    // Embedded JSON Data (acts like API)
+    const travelData = {
+        beaches: [
+            {
+                name: "Maldives Beach",
+                imageUrl: "https://images.unsplash.com/photo-1507525428034-b723cf961d3e",
+                description: "Crystal clear waters and white sandy beaches."
+            },
+            {
+                name: "Bali Beach",
+                imageUrl: "https://images.unsplash.com/photo-1507525428034-b723cf961d3e",
+                description: "A perfect blend of culture and ocean beauty."
+            }
+        ],
+        temples: [
+            {
+                name: "Angkor Wat",
+                imageUrl: "https://images.unsplash.com/photo-1581320543402-5c5db1b3f1c5",
+                description: "Ancient temple complex in Cambodia."
+            },
+            {
+                name: "Golden Temple",
+                imageUrl: "https://images.unsplash.com/photo-1602052577122-f73b9710adba",
+                description: "Spiritual heart of Sikhism in India."
+            }
+        ],
+        countries: [
+            {
+                name: "Japan",
+                imageUrl: "https://images.unsplash.com/photo-1549692520-acc6669e2f0c",
+                description: "Land of tradition and technology."
+            },
+            {
+                name: "Italy",
+                imageUrl: "https://images.unsplash.com/photo-1526481280698-8fcc13fd4f1d",
+                description: "Famous for art, history, and cuisine."
+            }
+        ]
+    };
+
+    console.log("Travel Data Loaded:", travelData);
+
+    function searchRecommendations() {
+        const keyword = document.getElementById("searchInput").value.toLowerCase();
+        const resultsDiv = document.getElementById("results");
+        resultsDiv.innerHTML = "";
+
+        let results = [];
+
+        if (keyword.includes("beach")) {
+            results = travelData.beaches;
+        } else if (keyword.includes("temple")) {
+            results = travelData.temples;
+        } else if (keyword.includes("country")) {
+            results = travelData.countries;
+        }
+
+        results.forEach(item => {
+            const card = document.createElement("div");
+            card.className = "card";
+            card.innerHTML = `
+                <img src="${item.imageUrl}">
+                <h3>${item.name}</h3>
+                <p>${item.description}</p>
+            `;
+            resultsDiv.appendChild(card);
+        });
+    }
+
+    function clearResults() {
+        document.getElementById("results").innerHTML = "";
+        document.getElementById("searchInput").value = "";
+    }
+</script>
+
+</body>
+</html>
