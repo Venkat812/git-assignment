@@ -1,6 +1,6 @@
 const axios = require("axios");
 
-const BASE_URL = "https://expressbookreview.mybluemix.net";
+const BASE_URL = "http://localhost:3000";
 
 /**
  * Get all books (using Promises)
